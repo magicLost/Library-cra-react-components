@@ -1,0 +1,90 @@
+.Table {
+  width: 100%;
+  max-width: 700px;
+  font-size: 14px;
+  margin: auto;
+  display: table;
+  border-spacing: 0;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  //background-color: rgb(173, 173, 173);
+  //border-radius: 25px;
+
+  .Caption {
+    padding: 12px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  .MainTh {
+    display: table-cell;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.55);
+    text-align: right;
+    background-color: rgb(221, 221, 221);
+    padding: 16px;
+    line-height: 16px;
+    box-sizing: inherit;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 5px;
+    }
+  }
+
+  .LeftTh {
+    display: table-cell;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.65);
+    text-align: left;
+    padding: 16px;
+    line-height: 16px;
+    box-sizing: inherit;
+  }
+
+  thead {
+    display: table-header-group;
+    box-sizing: inherit;
+  }
+
+  tbody {
+    display: table-row-group;
+    box-sizing: inherit;
+  }
+
+  .Tr {
+    display: table-row;
+    outline: 0;
+    vertical-align: middle;
+    box-sizing: inherit;
+    border-bottom: 1px solid rgba(81, 81, 81, 1);
+
+    &:nth-child(odd) {
+      background-color: rgba(207, 207, 207, 0.199);
+    }
+  }
+
+  .Td {
+    display: table-cell;
+    color: rgba(0, 0, 0, 0.65);
+    text-align: right;
+    border-bottom: 1px solid rgba(81, 81, 81, 1);
+    padding: 16px;
+    box-sizing: inherit;
+  }
+
+  .TextAlignLeft {
+    text-align: left;
+  }
+
+  .TextAlignCenter {
+    text-align: center;
+  }
+
+  .TextAlignRight {
+    text-align: right;
+  }
+}

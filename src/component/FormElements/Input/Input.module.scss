@@ -1,0 +1,153 @@
+.BaseInputWrapper {
+  //width: 100%;
+  box-sizing: border-box;
+
+  margin-bottom: 12px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+
+  line-height: 1;
+
+  letter-spacing: 0.009em;
+}
+
+.Label {
+  padding: 0;
+
+  cursor: pointer !important;
+
+  user-select: none;
+
+  font-size: 0.95rem;
+
+  color: rgba(0, 0, 0, 0.64);
+}
+
+.Label--Disabled {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.BaseInput {
+  outline: none;
+
+  text-align: left;
+  color: rgba(0, 0, 0, 0.84);
+
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #000000;
+  //border-radius: 7px;
+
+  background-color: white;
+  font: inherit;
+  padding: 6px 0 7px;
+  display: block;
+  //width: 100%;
+  box-sizing: content-box;
+
+  &:focus {
+    outline: none;
+    //background-color: #fff7e5;
+    border-bottom: 2px solid rgb(251, 255, 197);
+  }
+}
+
+.BaseInput--Disabled {
+  color: rgba(0, 0, 0, 0.44);
+  border-bottom: 2px solid rgb(197, 197, 197);
+}
+
+/* .Input--Focus{
+  &:focus {
+    outline: none;
+    //background-color: #fff7e5;
+    border-bottom: 2px solid rgb(178, 252, 255);
+  }
+} */
+
+.BaseInput--Error {
+  border-bottom: 2px solid red;
+
+  &:focus {
+    border-bottom: 2px solid red;
+  }
+}
+
+.Error {
+  color: red;
+  //padding-left: 8px;
+  padding-top: 5px;
+
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+/* .InputWrapper {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-bottom: 12px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+
+  line-height: 1;
+
+  letter-spacing: 0.009em;
+
+  .Label {
+    //display: block;
+    padding: 0;
+
+    font-size: 0.95rem;
+
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .Input {
+    outline: none;
+
+    text-align: left;
+    color: black;
+
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #000000;
+    //border-radius: 7px;
+
+    background-color: white;
+    font: inherit;
+    padding: 6px 0 7px;
+    display: block;
+    width: 100%;
+    box-sizing: content-box;
+
+    &:focus {
+      outline: none;
+      //background-color: #fff7e5;
+      border-bottom: 2px solid rgb(178, 252, 255);
+    }
+  }
+
+  .Input--Error {
+    border-bottom: 2px solid red;
+
+    &:focus {
+      border-bottom: 2px solid red;
+    }
+  }
+
+  .Error {
+    color: red;
+    //padding-left: 8px;
+    padding-top: 5px;
+
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+} */

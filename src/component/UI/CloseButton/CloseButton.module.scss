@@ -1,0 +1,69 @@
+// COLORS
+$softorange: rgba(0, 0, 0, 0.685);//#F4A259;
+$tomatored: #F25C66;
+$mediumblu: #1E272D;
+
+
+.CloseButton{
+     
+    position: relative;
+    //margin: auto;
+    width: 100%;
+    height: 100%;
+    //margin-top: -100%;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;  
+
+    .LeftRight{
+        display: block;
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        //margin-top: 0px;
+        background-color: $softorange;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        transition: all .3s ease-in;
+    }
+
+    .RightLeft{
+        display: block;
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        //margin-top: 0px;
+        background-color: $softorange;
+        border-radius: 2px;
+        transform: rotate(-45deg);
+        transition: all .3s ease-in;
+    }
+
+    .Label{
+        color: white;
+        font-family: Helvetica, Arial, sans-serif; 
+        font-size: .6em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all .3s ease-in;
+        opacity: 0;
+
+        margin: 155% 0 0 -19px;
+        position: absolute;
+    }
+
+    &:hover .LeftRight{
+        transform: rotate(-45deg);
+        background-color: $tomatored;
+    }
+    &:hover .RightLeft{
+        transform: rotate(45deg);
+        background-color: $tomatored;
+    }
+    &:hover .Label{
+       opacity: 1;
+    }
+
+
+
+}

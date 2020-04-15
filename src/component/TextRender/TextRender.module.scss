@@ -1,0 +1,61 @@
+.TextRender {
+  //padding-top: 10px;
+  max-width: 1000px;
+  margin: 10px auto 0;
+
+  padding: 5px 5px 10px 5px;
+
+  background-color: #fff;
+
+  //box-shadow: 0 10px 18px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
+
+  .Wrapper {
+  }
+
+  .Header {
+    text-align: center;
+    //color: blue;
+    padding-top: 15px;
+    padding-bottom: 5px;
+  }
+
+  .Paragraph {
+    padding: 5px 10px 10px 10px;
+
+    text-align: justify;
+    text-indent: 20px;
+  }
+
+  .List {
+    padding-left: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .Item {
+    }
+  }
+
+  .Anchor {
+    //text-decoration: underline double rgba(171, 255, 255, 0.849);
+    text-decoration: none;
+    //padding-bottom: -2px;
+    border-bottom: 2px solid rgba(166, 255, 255, 0.699);
+    color: inherit;
+  }
+}
+
+@media (min-width: 500px) {
+  .TextRender {
+    .List {
+      padding-left: 70px;
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .TextRender {
+    .List {
+      padding-left: 100px;
+    }
+  }
+}

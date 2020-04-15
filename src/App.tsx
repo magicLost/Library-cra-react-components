@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import icons from "./static/icons/ICONS.svg";
+import Button from "./component/UI/Button/Button";
+import Logo from "./component/UI/Logo/Logo";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+
+      <div style={{ padding: "20px" }}>
+        <Button
+          label="Hello"
+          ariaLabel="Hello button"
+          type="CONTAINED"
+          onClick={() => console.log("click")}
+        />
+      </div>
+
+      <div style={{ padding: "20px" }}>
+        <Logo
+          isHomepage={true}
+          pathToIcon={icons + "#logo"}
+          viewBox={"0 0 836 859.07"}
+        />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,325 @@
+.ControlsFeature {
+  touch-action: none;
+
+  position: relative;
+
+  width: 0;
+  height: 0;
+
+  margin: auto;
+
+  z-index: 99;
+
+  .Title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    /*top: -120px;
+      left: -150px;*/
+
+    width: 300px;
+    height: 25px;
+
+    //transform: scale(0, 0);
+    opacity: 0;
+
+    /*  transition-property: opacity;
+        transition-duration: 0.3s;*/
+
+    z-index: 99;
+
+    p {
+      padding: 5px 10px;
+
+      //border: 1px solid #c3c3c3;
+      //border-radius: 10px;
+
+      background-color: #f9f9f9;
+
+      //box-shadow: 0 10px 18px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
+
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+
+  /* .ItemMain{
+  
+       position: absolute;
+       top: -25px;
+       left: -25px;
+  
+       border: none;
+  
+       background-color: transparent;
+  
+       border-radius: 60px;
+  
+       cursor: pointer;
+  
+       z-index: 99;
+  
+       .Svg{
+         width: 30px;
+         height: 15px;
+  
+         padding: 17px 11px;
+  
+       }
+  
+     }*/
+
+  .ItemMain {
+    position: absolute;
+    user-select: none;
+    top: -20px;
+    left: -20px;
+
+    width: 40px;
+    height: 40px;
+
+    touch-action: none;
+
+    border: none;
+
+    background-color: transparent;
+    //background-color: darkred;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    z-index: 99;
+
+    .Svg {
+      user-select: none;
+      width: 20px;
+      height: 30px;
+
+      padding-top: 5px;
+      padding-left: 10px;
+    }
+  }
+
+  .ItemMainText {
+    touch-action: none;
+    user-select: none;
+
+    position: absolute;
+    top: -16px;
+    left: -60px;
+
+    width: 120px;
+    height: 32px;
+
+    border: none;
+
+    background-color: white;
+
+    text-align: center;
+
+    //padding: 5px 10px;
+
+    border-radius: 50px;
+
+    cursor: pointer;
+
+    z-index: 99;
+
+    span {
+      display: block;
+      font: inherit;
+      //text-transform: uppercase;
+      font-weight: 400;
+      padding: 5px;
+    }
+  }
+
+  .Item {
+    touch-action: none;
+
+    position: absolute;
+
+    top: -20px;
+    left: -20px;
+
+    width: 40px;
+    height: 40px;
+
+    background-color: white;
+
+    border: none;
+    border-radius: 50px;
+
+    opacity: 0;
+
+    transform: translate(0, 0) scale(0, 0);
+
+    transition-property: transform, opacity;
+    transition-duration: 0.5s;
+
+    z-index: 99;
+
+    .ItemSvg {
+      user-select: none;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .ItemText {
+    touch-action: none;
+    user-select: none;
+
+    position: absolute;
+    top: -15px;
+    left: -50px;
+
+    min-width: 100px;
+    //height: 30px;
+
+    text-align: center;
+
+    background-color: white;
+
+    border: none;
+
+    //border-radius: 50px;
+
+    opacity: 0;
+
+    transform: translate(0, 0) scale(0, 0);
+    //transform: scale(0, 0);
+
+    transition-property: transform, opacity;
+    transition-duration: 0.5s;
+
+    cursor: pointer;
+
+    z-index: 100;
+
+    .Label {
+      font: inherit;
+      //text-transform: uppercase;
+      font-weight: 400;
+      padding: 5px;
+    }
+  }
+
+  //HalfCicle
+  .ItemBG {
+    touch-action: none;
+    user-select: none;
+
+    position: absolute;
+    top: -10px;
+    left: -10px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    /* width: 50px;
+       height: 50px;*/
+
+    width: 20px;
+    height: 20px;
+
+    //border-radius:   0 0 100% 100%;
+
+    //transform: scale(11.5, 11.5);
+    //transform: scale(0, 0);
+    transition-property: transform, opacity;
+    transition-duration: 0.5s;
+
+    opacity: 0;
+
+    z-index: 99;
+
+    .TopLeft {
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      width: 50%;
+      height: 50%;
+
+      //border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      border-top-left-radius: 100%;
+
+      //visibility: hidden;
+
+      background-color: #e1e1e1;
+    }
+
+    .TopRight {
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      width: 50%;
+      height: 50%;
+
+      //border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      border-top-right-radius: 100%;
+
+      //visibility: hidden;
+
+      background-color: #e1e1e1;
+    }
+
+    .BottomLeft {
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      width: 50%;
+      height: 50%;
+
+      //border-radius:  0 0 50% 50% / 0 0 100% 100%;
+      border-bottom-left-radius: 100%;
+
+      background-color: #e1e1e1;
+    }
+
+    .BottomRight {
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      width: 50%;
+      height: 50%;
+
+      //border-radius:  0 0 50% 50% / 0 0 100% 100%;
+      border-bottom-right-radius: 100%;
+
+      background-color: #e1e1e1;
+    }
+  }
+}
+
+.Hidden {
+  visibility: hidden;
+}
+
+@media (min-width: 700px) {
+  .ControlsFeature {
+    .ItemMain {
+      .Svg {
+      }
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .ControlsFeature {
+    .ItemMain {
+      .Svg {
+        /*  width: 20px;
+          height: 20px;
+  
+          padding: 10px;*/
+      }
+    }
+  }
+}
