@@ -49,7 +49,8 @@ const formControllerFactory = <T>(
   formModel: IFormModel<T>,
   url?: string,
   sendPostWithJsonResponse?: TSendPostWithJsonResponse,
-  calcDateAndToken?: TCalcDateAndToken
+  calcDateAndToken?: TCalcDateAndToken,
+  successMessage?: string
 ): IFormController<T> => {
   switch (formType) {
     case "WITH_REQUEST":
@@ -63,7 +64,8 @@ const formControllerFactory = <T>(
         formModel,
         url,
         sendPostWithJsonResponse,
-        calcDateAndToken
+        calcDateAndToken,
+        successMessage as string
       );
     case "SIMPLE":
       return new FormController(formElements, formModel);
@@ -80,7 +82,8 @@ export const useForm = <T>(
   formModel: IFormModel<T>,
   sendPostWithJsonResponse?: TSendPostWithJsonResponse,
   url?: string,
-  calcDateAndToken?: TCalcDateAndToken
+  calcDateAndToken?: TCalcDateAndToken,
+  successMessage?: string
 ): useFormReturn<T> => {
   const controllerRef: React.MutableRefObject<IFormController<
     T
@@ -94,7 +97,8 @@ export const useForm = <T>(
         formModel,
         url,
         sendPostWithJsonResponse,
-        calcDateAndToken
+        calcDateAndToken,
+        successMessage
       );
 
       const formElementsState = controller.model.getFormElementsInitState(

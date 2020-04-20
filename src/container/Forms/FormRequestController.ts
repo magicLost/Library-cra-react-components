@@ -1,17 +1,19 @@
 import React from "react";
 //import axios from "axios";
 
-import { IFeedbackModel, IHiddenField, IFormModel } from "./interfaces";
+import { IHiddenField, IFormModel } from "./interfaces";
 import { IFormState } from "../../hooks/Form/form";
 import {
-  IFormElementDesc,
+  //IFormElementDesc,
   TFormElementsDescs,
 } from "../../component/Form/Form";
 import { IRequestState } from "../../hooks/request";
-import FeedbackModel from "./Feedback/FeedbackModel/FeedbackModel";
+//import FeedbackModel from "./Feedback/FeedbackModel/FeedbackModel";
 import { AFormController } from "./FormController";
 //import { TSendPostWithJsonResponse } from "./Feedback/FeedbackController/FeedbackController";
 import { TCalcDateAndToken } from "../../helper/createToken";
+import { IJsonResponse } from "../../types";
+
 /* interface InputChangeAction {
     type: FORM_ACTION,
     formElementState: IFormElementState
@@ -32,6 +34,7 @@ export type TSendPostWithJsonResponse = <T>(
 ) => Promise<T>;
 
 class FormRequestController<T> extends AFormController<T> {
+  successMessage = "Все супер!!!";
   url = "";
   hiddenFields?: IHiddenField[];
   sendPostWithJsonResponse: TSendPostWithJsonResponse;
@@ -45,12 +48,14 @@ class FormRequestController<T> extends AFormController<T> {
     model: IFormModel<T>,
     url: string,
     sendPostWithJsonResponse: TSendPostWithJsonResponse,
-    calcDateAndToken: TCalcDateAndToken
+    calcDateAndToken: TCalcDateAndToken,
+    successMessage: string
   ) {
     super(formElements, model);
     this.sendPostWithJsonResponse = sendPostWithJsonResponse;
     this.calcDateAndToken = calcDateAndToken;
     this.url = url;
+    this.successMessage = successMessage;
   }
 
   onClear = (event: any) => {
@@ -145,8 +150,7 @@ class FormRequestController<T> extends AFormController<T> {
       return {
         ...prevState,
         formError: "",
-        formMessage:
-          "Мы получили вашу заявку и свяжемся с вами в течение 15 минут.",
+        formMessage: this.successMessage,
       };
     });
 
@@ -157,7 +161,7 @@ class FormRequestController<T> extends AFormController<T> {
     });
   };
 
-  protected onFail = (data: any) => {
+  protected onFail = (result: IJsonResponse<any>) => {
     if (this.setFormState === null) throw new Error("No setFormState...");
 
     if (this.setRequestState === null) throw new Error("No setRequestState...");
@@ -165,7 +169,7 @@ class FormRequestController<T> extends AFormController<T> {
     this.setFormState((prevState: IFormState<T>) => {
       return {
         ...prevState,
-        formError: data.data.error,
+        formError: result.error.message,
         formMessage: "",
       };
     });
@@ -234,30 +238,50 @@ class FormRequestController<T> extends AFormController<T> {
     });
   };
 
-  protected postRequest(formData: FormData): void | undefined {
+  protected async postRequest(formData: FormData): Promise<any> {
     this.beforeRequest();
 
-    this.sendPostWithJsonResponse<{ status: "success" | "fail" }>(
-      this.url,
-      formData
-    )
-      .then((data) => {
-        if (data.status && data.status === "success") {
+    try {
+      const data = await this.sendPostWithJsonResponse<IJsonResponse<any>>(
+        this.url,
+        formData
+      );
+
+      //console.log("DATA", data);
+
+      if (data.status && data.status === "SUCCESS") {
+        //console.log(data);
+
+        this.onSuccess();
+      } else if (data.status && data.status === "FAIL") {
+        //console.log(data);
+
+        this.onFail(data);
+      } else {
+        this.onWrongStatus();
+      }
+    } catch (error) {
+      //console.log("[SERVER ERROR] ", error);
+      this.onServerError();
+    }
+    /* .then((data) => {
+        console.log("SUCCESS", data);
+        if (data.status && data.status === "SUCCESS") {
           console.log(data);
 
           this.onSuccess();
-        } else if (data.status && data.status === "fail") {
+        } /* else if (data.status && data.status === "fail") {
           console.log(data);
 
           this.onFail(data);
-        } else {
+        }  else {
           this.onWrongStatus();
         }
       })
       .catch((error) => {
         console.log("[SERVER ERROR] ", error);
         this.onServerError();
-      });
+      }); */
   }
 }
 

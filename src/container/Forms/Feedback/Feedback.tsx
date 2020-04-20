@@ -31,6 +31,7 @@ interface FeedbackProps {
   //formElementsMap: TFormElementsDescs<FEEDBACK_FORM_ELEMENTS>;
   calcDateAndToken: TCalcDateAndToken;
   hiddenFields?: IHiddenField[];
+  successMessage: string;
 }
 
 function Feedback({
@@ -42,6 +43,7 @@ function Feedback({
   //formElementsMap,
   calcDateAndToken,
   hiddenFields,
+  successMessage,
 }: FeedbackProps) {
   const formElementsMap = isCallMe ? callMeElementsMap : feedbackElementsMap;
 
@@ -53,7 +55,8 @@ function Feedback({
     new FeedbackModel(new FormValidatorChain(), isCallMe),
     sendPostWithJsonResponse,
     url,
-    calcDateAndToken
+    calcDateAndToken,
+    successMessage
   );
 
   const {

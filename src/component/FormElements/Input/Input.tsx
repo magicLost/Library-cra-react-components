@@ -58,7 +58,7 @@ const Input = ({
     );
   }
 
-  console.log("REnder input", name);
+  //console.log("REnder input", name);
 
   return (
     <div className={classes.BaseInputWrapper}>

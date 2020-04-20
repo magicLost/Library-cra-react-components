@@ -32,11 +32,12 @@ export default {
 export const Default = () => {
   return (
     <Feedback
-      url={`/feedback`}
+      url={`http://localhost:3000/test/form/fail`}
       sendPostWithJsonResponse={sendPostWithJsonResponse}
       calcDateAndToken={calcDateAndToken}
       hiddenFields={[]}
       isCallMe={false}
+      successMessage={"Все ОК!!!"}
     />
   );
 };
@@ -44,11 +45,12 @@ export const Default = () => {
 export const CallMe = () => {
   return (
     <Feedback
-      url={`/feedback`}
+      url={`http://localhost:3000/test/form/success`}
       sendPostWithJsonResponse={sendPostWithJsonResponse}
       calcDateAndToken={calcDateAndToken}
       hiddenFields={[]}
       isCallMe={true}
+      successMessage={"Все ОК!!!"}
     />
   );
 };

@@ -5,7 +5,7 @@ export interface INpmConfig {
 }
 
 export const config: INpmConfig = {
-  version: "1.0.0",
+  version: "1.0.2",
 
   excludeDirs: ["utils"],
 
@@ -18,6 +18,6 @@ export const config: INpmConfig = {
     "logo.svg",
     "react-app-env.d.ts",
     "serviceWorker.ts",
-    "setupTests.ts"
-  ]
+    "setupTests.ts",
+  ],
 };
