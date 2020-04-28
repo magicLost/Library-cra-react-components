@@ -10,8 +10,12 @@ class FeedbackModel<FEEDBACK_FORM_ELEMENTS> extends FormModel<
 > {
   isCallMe: boolean;
 
-  constructor(validatorChain: IFormValidatorChain, isCallMe: boolean) {
-    super(validatorChain);
+  constructor(
+    validatorChain: IFormValidatorChain,
+    isCallMe: boolean,
+    getToken: () => string
+  ) {
+    super(validatorChain, getToken);
 
     this.isCallMe = isCallMe;
   }

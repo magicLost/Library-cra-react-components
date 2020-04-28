@@ -2,11 +2,11 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 //import { withKnobs, object } from "@storybook/addon-knobs/react";
 import { sendPostWithJsonResponse } from "utils-library-lost/Fetch/Fetch";
-import Feedback from "./Feedback";
+import LoginForm from "./LoginForm";
 
 export default {
-  component: Feedback,
-  title: "Forms/Feedback",
+  component: LoginForm,
+  title: "Forms/LoginForm",
   decorators: [
     (story) => (
       <div
@@ -30,25 +30,13 @@ export default {
 
 export const Default = () => {
   return (
-    <Feedback
-      url={`http://localhost:3000/test/form/fail`}
+    <LoginForm
+      url={`http://localhost:3000/api/v1/users/login`}
       sendPostWithJsonResponse={sendPostWithJsonResponse}
-      hiddenFields={[]}
-      isCallMe={false}
-      successMessage={"Все ОК!!!"}
-      getToken={() => "token"}
-    />
-  );
-};
-
-export const CallMe = () => {
-  return (
-    <Feedback
-      url={`http://localhost:3000/test/form/success`}
-      sendPostWithJsonResponse={sendPostWithJsonResponse}
-      hiddenFields={[]}
-      isCallMe={true}
-      successMessage={"Все ОК!!!"}
+      successMessage={"Все пучком."}
+      onSuccess={(user) => {
+        console.log(user);
+      }}
       getToken={() => "token"}
     />
   );

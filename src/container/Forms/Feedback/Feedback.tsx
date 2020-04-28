@@ -2,7 +2,7 @@ import React from "react";
 //import classes from "./Feedback.module.scss";
 
 import { IHiddenField } from "./../interfaces";
-import { useForm, useFormRequest } from "../../../hooks/Form/form";
+import { useRequestForm, useFormRequest } from "../../../hooks/Form/form";
 //import FeedbackController from "./FeedbackController/FeedbackController";
 import {
   feedbackElementsMap,
@@ -16,7 +16,6 @@ import FormRequestController, {
   TSendPostWithJsonResponse,
 } from "../FormRequestController";
 import { IFormModel } from "./../interfaces";
-import { TCalcDateAndToken } from "./../../../helper/createToken";
 import FeedbackModel, {
   FEEDBACK_FORM_ELEMENTS,
 } from "./FeedbackModel/FeedbackModel";
@@ -29,9 +28,9 @@ interface FeedbackProps {
   //formModel: IFormModel<FEEDBACK_FORM_ELEMENTS>;
   sendPostWithJsonResponse: TSendPostWithJsonResponse;
   //formElementsMap: TFormElementsDescs<FEEDBACK_FORM_ELEMENTS>;
-  calcDateAndToken: TCalcDateAndToken;
   hiddenFields?: IHiddenField[];
   successMessage: string;
+  getToken: () => string;
 }
 
 function Feedback({
@@ -41,21 +40,22 @@ function Feedback({
   //formModel,
   sendPostWithJsonResponse,
   //formElementsMap,
-  calcDateAndToken,
   hiddenFields,
   successMessage,
+  getToken,
 }: FeedbackProps) {
   const formElementsMap = isCallMe ? callMeElementsMap : feedbackElementsMap;
 
-  const { controller, formError, formMessage, formElementsState } = useForm<
-    FEEDBACK_FORM_ELEMENTS
-  >(
+  const {
+    controller,
+    formError,
+    formMessage,
+    formElementsState,
+  } = useRequestForm<FEEDBACK_FORM_ELEMENTS, undefined>(
     formElementsMap,
-    "WITH_REQUEST",
-    new FeedbackModel(new FormValidatorChain(), isCallMe),
+    new FeedbackModel(new FormValidatorChain(), isCallMe, getToken),
     sendPostWithJsonResponse,
     url,
-    calcDateAndToken,
     successMessage
   );
 
@@ -66,10 +66,12 @@ function Feedback({
   } = useFormRequest();
 
   (controller as FormRequestController<
-    FEEDBACK_FORM_ELEMENTS
+    FEEDBACK_FORM_ELEMENTS,
+    undefined
   >).hiddenFields = hiddenFields;
   (controller as FormRequestController<
-    FEEDBACK_FORM_ELEMENTS
+    FEEDBACK_FORM_ELEMENTS,
+    undefined
   >).setRequestState = setRequestState;
 
   console.log("[Render] feedback form");

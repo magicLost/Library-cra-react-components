@@ -15,7 +15,6 @@ interface CalcPriceProps {}
 function CalcPrice({}: CalcPriceProps) {
   const { controller, formError, formMessage, formElementsState } = useForm(
     calcPriceElementsMap,
-    "SIMPLE",
     new CalcPriceModel(new FormValidatorChain(), priceMultiply)
   );
 

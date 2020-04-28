@@ -4,6 +4,7 @@ import "./App.css";
 import icons from "./static/icons/ICONS.svg";
 import Button from "./component/UI/Button/Button";
 import Logo from "./component/UI/Logo/Logo";
+import LoginForm from "./container/Forms/LoginForm/LoginForm";
 
 function App() {
   return (

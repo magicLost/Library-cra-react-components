@@ -19,6 +19,7 @@ export interface IHiddenField {
 
 export interface IFormModel<T> {
   validatorChain: IFormValidatorChain;
+  getToken?: () => string;
 
   validateOnSubmit(stateFormElements: TFormElementsState<T>): string;
 

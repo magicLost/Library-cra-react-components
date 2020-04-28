@@ -11,9 +11,11 @@ import { IFormValidatorChain } from "./../../helper/Validation/FormValidatorChai
 
 export default abstract class FormModel<T> implements IFormModel<T> {
   validatorChain: IFormValidatorChain;
+  getToken?: () => string;
 
-  constructor(validatorChain: IFormValidatorChain) {
+  constructor(validatorChain: IFormValidatorChain, getToken: () => string) {
     this.validatorChain = validatorChain;
+    this.getToken = getToken;
   }
 
   abstract calcAndGetFormMessage(formData: FormData): string;
