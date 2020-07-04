@@ -4,9 +4,10 @@ import classes from "./LoginForm.module.scss";
 import { useRequestForm, useFormRequest } from "../../../hooks/Form/form";
 //import FeedbackController from "./FeedbackController/FeedbackController";
 
-import Form, {
+import {
   TFormElementsDescs,
   TFormElementsState,
+  IFormProps,
 } from "../../../component/Form/Form";
 import FormRequestController, {
   TSendPostWithJsonResponse,
@@ -21,12 +22,13 @@ import LoginFormModel, {
 
 import { loginElementsMap } from "./../../../data/form/login_form_data";
 
-interface LoginFormProps<RESPONSE_DATA_TYPE> {
+interface LoginFormProps<RESPONSE_DATA_TYPE, T> {
   url: string;
   sendPostWithJsonResponse: TSendPostWithJsonResponse;
   successMessage: string;
   onSuccess?: (data: RESPONSE_DATA_TYPE) => void | undefined;
   getToken: () => string;
+  Form: React.FC<IFormProps<T>>;
 }
 
 function LoginForm<RESPONSE_DATA_TYPE>({
@@ -35,7 +37,8 @@ function LoginForm<RESPONSE_DATA_TYPE>({
   successMessage,
   onSuccess,
   getToken,
-}: LoginFormProps<RESPONSE_DATA_TYPE>) {
+  Form,
+}: LoginFormProps<RESPONSE_DATA_TYPE, LOGIN_FORM_ELEMENTS>) {
   const {
     controller,
     formError,

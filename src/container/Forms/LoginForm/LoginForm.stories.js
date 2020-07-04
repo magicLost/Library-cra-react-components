@@ -3,6 +3,7 @@ import { action } from "@storybook/addon-actions";
 //import { withKnobs, object } from "@storybook/addon-knobs/react";
 import { sendPostWithJsonResponse } from "utils-library-lost/Fetch/Fetch";
 import LoginForm from "./LoginForm";
+import Form from "./../../../component/Form/Form";
 
 export default {
   component: LoginForm,
@@ -38,6 +39,7 @@ export const Default = () => {
         console.log(user);
       }}
       getToken={() => "token"}
+      Form={Form}
     />
   );
 };

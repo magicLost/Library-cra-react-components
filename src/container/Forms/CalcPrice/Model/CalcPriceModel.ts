@@ -34,7 +34,7 @@ class CalcPriceModel<CALC_FORM_ELEMENTS> extends FormModel<CALC_FORM_ELEMENTS> {
     validatorChain: IFormValidatorChain,
     priceMultiply: PriceMultiply
   ) {
-    super(validatorChain);
+    super(validatorChain, () => "");
     this.priceMultiply = priceMultiply;
   }
 

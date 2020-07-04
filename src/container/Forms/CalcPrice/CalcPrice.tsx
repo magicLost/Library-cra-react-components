@@ -1,18 +1,24 @@
 import React, { useMemo, useRef } from "react";
 //import classes from "./CalcPrice.module.scss";
 
-import Form from "../../../component/Form/Form";
+import {
+  TFormElementsDescs,
+  TFormElementsState,
+  IFormProps,
+} from "../../../component/Form/Form";
 import {
   calcPriceElementsMap,
   priceMultiply,
 } from "./../../../data/form/calc_price_form_data";
 import { useForm } from "../../../hooks/Form/form";
-import CalcPriceModel from "./Model/CalcPriceModel";
+import CalcPriceModel, { CALC_FORM_ELEMENTS } from "./Model/CalcPriceModel";
 import FormValidatorChain from "../../../helper/Validation/FormValidatorChain";
 
-interface CalcPriceProps {}
+interface CalcPriceProps<T> {
+  Form: React.FC<IFormProps<T>>;
+}
 
-function CalcPrice({}: CalcPriceProps) {
+function CalcPrice({ Form }: CalcPriceProps<CALC_FORM_ELEMENTS>) {
   const { controller, formError, formMessage, formElementsState } = useForm(
     calcPriceElementsMap,
     new CalcPriceModel(new FormValidatorChain(), priceMultiply)

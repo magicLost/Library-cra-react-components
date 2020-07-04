@@ -9,7 +9,8 @@ export type SrcSet = {
 
 export interface ImageProps {
   alt: string;
-  isActive: boolean;
+  isActive?: boolean;
+  isHidden?: boolean;
   src: string;
   onImageClick?: (event: any) => void | undefined;
   index?: number;
@@ -20,15 +21,16 @@ export interface ImageProps {
 
 const Image = ({
   alt,
-  isActive,
+  isActive = true,
+  isHidden = false,
   src,
   onImageClick,
   onLoad = undefined,
   onError = undefined,
   index = 0,
-  srcSets = []
+  srcSets = [],
 }: ImageProps) => {
-  const getImageWithSrcSet = (isActive: boolean) => {
+  const getImageWithSrcSet = (isHidden: boolean, isActive: boolean) => {
     const sources = srcSets.map((value, index) => {
       const imageSrcSet = isActive ? value.srcSet : "";
       const imageDataSrcSet = isActive ? undefined : value.srcSet;
@@ -43,7 +45,7 @@ const Image = ({
       );
     });
 
-    const image = getImageTag(isActive);
+    const image = getImageTag(isHidden, isActive);
 
     return (
       <picture>
@@ -55,13 +57,16 @@ const Image = ({
   };
 
   //style={{visibility: isLoad ? 'visible' : 'hidden'}}
-  const getImageTag = (isActive: boolean) => {
+  const getImageTag = (isHidden: boolean, isActive: boolean) => {
     const imageSrc = isActive ? src : "";
     const imageDataSrc = isActive ? undefined : src;
+    const imageClasses = isHidden
+      ? `${classes.Image} ${classes.hidden}`
+      : classes.Image;
 
     return (
       <img
-        className={classes.Image}
+        className={imageClasses}
         data-index={index}
         onClick={onImageClick}
         src={imageSrc}
@@ -74,7 +79,9 @@ const Image = ({
   };
 
   const image =
-    srcSets.length > 0 ? getImageWithSrcSet(isActive) : getImageTag(isActive);
+    srcSets.length > 0
+      ? getImageWithSrcSet(isHidden, isActive)
+      : getImageTag(isHidden, isActive);
 
   return <>{image}</>;
 };

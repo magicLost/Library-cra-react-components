@@ -2,6 +2,7 @@ export { default as Anchor } from "./component/UI/Anchor/Anchor";
 export { default as Button } from "./component/UI/Button/Button";
 export { default as CloseButton } from "./component/UI/CloseButton/CloseButton";
 export { default as Image } from "./component/UI/Image/Image";
+export { default as ImageSharp } from "./component/UI/ImageSharp";
 export { default as ImgWithLoading } from "./component/UI/ImgWithLoading/ImgWithLoading";
 export { default as ListSvgWithText } from "./component/UI/ListSvgWithText/ListSvgWithText";
 export { default as ListSvg } from "./component/UI/ListSvg/ListSvg";

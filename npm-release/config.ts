@@ -5,7 +5,7 @@ export interface INpmConfig {
 }
 
 export const config: INpmConfig = {
-  version: "1.0.2",
+  version: "1.0.7",
 
   excludeDirs: ["utils"],
 

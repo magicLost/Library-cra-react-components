@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import classes from "./ImgWithLoading.module.scss";
 import Image, { SrcSet, ImageProps } from "../Image/Image";
-import { Spinner } from "../Spinner/Spinner";
+import Spinner from "../Spinner/Spinner";
 
 const ImgWithLoading = ({
   alt,
@@ -9,7 +9,7 @@ const ImgWithLoading = ({
   src,
   onImageClick,
   index = 0,
-  srcSets = []
+  srcSets = [],
 }: ImageProps) => {
   const [isLoad, setIsLoad] = useState(true);
   const [error, setError] = useState("");
@@ -51,21 +51,18 @@ const ImgWithLoading = ({
   };
 
   const getImage = () => {
-    const imageClass = isLoad ? classes.Hidden : undefined;
-
     return (
-      <div className={imageClass}>
-        <Image
-          alt={alt}
-          isActive={isActive}
-          src={src}
-          srcSets={srcSets}
-          onImageClick={onImageClick}
-          onError={onError}
-          onLoad={onLoad}
-          index={index}
-        />
-      </div>
+      <Image
+        alt={alt}
+        isActive={isActive}
+        isHidden={isLoad}
+        src={src}
+        srcSets={srcSets}
+        onImageClick={onImageClick}
+        onError={onError}
+        onLoad={onLoad}
+        index={index}
+      />
     );
   };
 

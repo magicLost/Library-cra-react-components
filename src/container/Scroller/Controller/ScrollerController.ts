@@ -1,289 +1,262 @@
-import React from 'react';
-import IdentifyEvent, {EVENT_TYPE} from "../Model/IdentifyEvent"
+import React from "react";
+import IdentifyEvent, { EVENT_TYPE } from "../Model/IdentifyEvent";
 import CalcTranslateX from "../Model/CalcTranslateX";
 import ShowContentHelper from "../Model/ShowContentHelper";
 import { CSSProperties } from "react";
-import {ScrollerState} from '../../../../hooks/Scrollers/Scroller/types';
+import { ScrollerState } from "../../../hooks/Scroller/types";
 
+class ScrollerController {
+  calcTranslateX: CalcTranslateX;
+  eventTyper: IdentifyEvent;
+  showContentManager: ShowContentHelper;
 
+  itemRef: React.RefObject<HTMLLIElement> | null = null;
+  listRef: React.RefObject<HTMLUListElement> | null = null;
+  containerRef: React.RefObject<HTMLDivElement> | null = null;
+  //dispatch = null;
+  setState: React.Dispatch<
+    ((prevState: ScrollerState) => ScrollerState) | ScrollerState
+  > | null = null;
 
-class ScrollerController{
+  //isNeedScroller = false;
+  numberOfItems = 0;
+  listStyle: CSSProperties = {};
+  eventType: EVENT_TYPE | "" = "";
 
-    calcTranslateX: CalcTranslateX;
-    eventTyper: IdentifyEvent;
-    showContentManager: ShowContentHelper;
+  constructor(
+    calc: CalcTranslateX,
+    eventTyper: IdentifyEvent,
+    showContentManager: ShowContentHelper
+  ) {
+    this.calcTranslateX = calc;
+    this.eventTyper = eventTyper;
+    this.showContentManager = showContentManager;
+  }
 
-    itemRef: React.RefObject<HTMLLIElement> | null = null;
-    listRef: React.RefObject<HTMLUListElement> | null = null;
-    containerRef: React.RefObject<HTMLDivElement> | null = null;
-    //dispatch = null;
-    setState: React.Dispatch<((prevState: ScrollerState) => ScrollerState) | ScrollerState> | null = null;
+  init = () => {
+    if (this.listRef === null || this.itemRef === null)
+      throw new Error("NO listRef or itemRef");
 
-    
-    //isNeedScroller = false;
-    numberOfItems = 0;
-    listStyle: CSSProperties = {};
-    eventType: EVENT_TYPE | '' = '';
+    this.calcTranslateX.setValues(
+      this.listRef,
+      this.itemRef,
+      this.numberOfItems
+    );
 
-    constructor(calc: CalcTranslateX, eventTyper: IdentifyEvent, showContentManager: ShowContentHelper){
-        
-        this.calcTranslateX = calc;
-        this.eventTyper = eventTyper;
-        this.showContentManager = showContentManager;
-    }
+    this.calcTranslateX.translateX = 0;
 
-    init = () => {
+    const isNeedScroller = this.calcTranslateX.isNeedScroller();
 
-        if(this.listRef === null || this.itemRef === null)
-            throw new Error("NO listRef or itemRef");
+    this.showContentManager.init(
+      this.calcTranslateX.listWidth,
+      this.calcTranslateX.itemWidth,
+      this.numberOfItems
+    );
 
-        this.calcTranslateX.setValues(this.listRef, this.itemRef, this.numberOfItems);
+    if (this.setState === null) throw new Error("No state");
 
-        this.calcTranslateX.translateX = 0;
-    
-        const isNeedScroller = this.calcTranslateX.isNeedScroller();
-
-        this.showContentManager.init(this.calcTranslateX.listWidth, this.calcTranslateX.itemWidth, this.numberOfItems);
-    
-        if(this.setState === null)
-            throw new Error("No state");
-
-        this.setState((prevState: ScrollerState) => {
-
-            /*if(prevState.isNeedScroller !== isNeedScroller){
+    this.setState((prevState: ScrollerState) => {
+      /*if(prevState.isNeedScroller !== isNeedScroller){
                 return { ...prevState, isNeedScroller: isNeedScroller };
             }
         
             return prevState;*/
 
-            return { 
-                ...prevState, 
-                isNeedScroller: isNeedScroller, 
-                translateX: 0,
-                numberOfActiveItems: this.showContentManager.numberOfActiveItems 
-            };
-
-        });
-        
-    
-    };
-
-    getTranslateX = (): number => {
-
-        return this.calcTranslateX.translateX;
-
-    };
-
-    onWindowResize = () => {
-
-        if(this.listRef === null || this.itemRef === null) 
-            throw new Error("No listRef or itemRef");
-
-        this.calcTranslateX.setValues(this.listRef, this.itemRef, this.numberOfItems);
-        //this.calcTranslateX.offsetX = this.containerRef.current.getBoundingClientRect().x;//right
-    
-        const isNeedScroller = this.calcTranslateX.isNeedScroller();
-        //setValues(listWidth, itemWidth, numberOfItems, minTranslateOffset, maxTranslateOffset);
-    
-        if(this.setState === null) throw new Error("No state");
-
-        this.setState((prevState: ScrollerState) => {
-
-            if(prevState.isNeedScroller === false){
-    
-                if(isNeedScroller === false){
-        
-                    return prevState;
-        
-                }else{
-        
-                    return { ...prevState, isNeedScroller: true };
-        
-                }
-        
-            }else{
-        
-                if(isNeedScroller === false){
-                    return {
-                        ...prevState,
-                        isNeedScroller: false,
-                        translateX: 0
-                    };
-                }else{
-        
-                    //check if translateX is out offsets
-                    //return translateX > this.maxTranslateOffset || translateX < this.minTranslateOffset;
-                    let translateX = prevState.translateX;
+      return {
+        ...prevState,
+        isNeedScroller: isNeedScroller,
+        translateX: 0,
+        numberOfActiveItems: this.showContentManager.numberOfActiveItems,
+      };
+    });
+  };
+
+  getTranslateX = (): number => {
+    return this.calcTranslateX.translateX;
+  };
+
+  onWindowResize = () => {
+    if (this.listRef === null || this.itemRef === null)
+      throw new Error("No listRef or itemRef");
+
+    this.calcTranslateX.setValues(
+      this.listRef,
+      this.itemRef,
+      this.numberOfItems
+    );
+    //this.calcTranslateX.offsetX = this.containerRef.current.getBoundingClientRect().x;//right
+
+    const isNeedScroller = this.calcTranslateX.isNeedScroller();
+    //setValues(listWidth, itemWidth, numberOfItems, minTranslateOffset, maxTranslateOffset);
+
+    if (this.setState === null) throw new Error("No state");
+
+    this.setState((prevState: ScrollerState) => {
+      if (prevState.isNeedScroller === false) {
+        if (isNeedScroller === false) {
+          return prevState;
+        } else {
+          return { ...prevState, isNeedScroller: true };
+        }
+      } else {
+        if (isNeedScroller === false) {
+          return {
+            ...prevState,
+            isNeedScroller: false,
+            translateX: 0,
+          };
+        } else {
+          //check if translateX is out offsets
+          //return translateX > this.maxTranslateOffset || translateX < this.minTranslateOffset;
+          let translateX = prevState.translateX;
+
+          if (translateX > this.calcTranslateX.maxTranslateOffset) {
+            translateX = this.calcTranslateX.maxTranslateOffset;
+          } else if (translateX < this.calcTranslateX.minTranslateOffset) {
+            translateX = this.calcTranslateX.minTranslateOffset;
+          }
 
-                    if(translateX > this.calcTranslateX.maxTranslateOffset){
-        
-                        translateX = this.calcTranslateX.maxTranslateOffset;
-        
-                    }else if(translateX < this.calcTranslateX.minTranslateOffset){
-        
-                        translateX = this.calcTranslateX.minTranslateOffset;
-        
-                    }
-        
-                    if(translateX !== prevState.translateX){
-                        return { ...prevState, translateX: translateX };
-                    }
-        
-                    return prevState;
-        
-                }
-        
-            }
+          if (translateX !== prevState.translateX) {
+            return { ...prevState, translateX: translateX };
+          }
 
-        });
-    
-    
-    };
+          return prevState;
+        }
+      }
+    });
+  };
 
-    onMouseDown = (event: any) => {
+  onMouseDown = (event: any) => {
+    //console.log('Scroller onMouseDown');
+    event.preventDefault();
+    event.stopPropagation();
 
-        //console.log('Scroller onMouseDown');
-        event.preventDefault();
-        event.stopPropagation();
+    this.onPointerDown(event.pageX, event.pageY);
 
-        this.onPointerDown(event.pageX, event.pageY);
+    window.addEventListener("mousemove", this.onMouseMove, false);
+    window.addEventListener("mouseup", this.onMouseUp, false);
+  };
 
-        window.addEventListener('mousemove', this.onMouseMove, false);
-        window.addEventListener('mouseup', this.onMouseUp, false);
+  onMouseMove = (event: any) => {
+    //console.log('Scroller onMouseMove');
 
-    };
+    event.preventDefault();
+    event.stopPropagation();
 
-    onMouseMove = (event: any) => {
-        //console.log('Scroller onMouseMove');
+    //console.log("onMouseMove");
 
-        event.preventDefault();
-        event.stopPropagation();
+    this.onPointerMove(event.pageX, event.pageY);
+  };
 
-        //console.log("onMouseMove");
+  onMouseUp = (event: any) => {
+    //console.log('Scroller onMouseUp');
 
-        this.onPointerMove(event.pageX, event.pageY);
+    event.preventDefault();
+    event.stopPropagation();
 
-    };
+    this.onPointerUp(event.pageX, event.pageY);
+
+    window.removeEventListener("mousemove", this.onMouseMove, false);
+    window.removeEventListener("mouseup", this.onMouseUp, false);
+  };
 
-    onMouseUp = (event: any) => {
-        //console.log('Scroller onMouseUp');
+  onTouchStart = (event: any) => {
+    //console.log('Scroller onTouchStart');
+    event.preventDefault();
+    event.stopPropagation();
 
-        event.preventDefault();
-        event.stopPropagation();
+    const touch = event.changedTouches[0];
 
-        this.onPointerUp(event.pageX, event.pageY);
+    this.onPointerDown(touch.pageX, touch.pageY);
+  };
 
-        window.removeEventListener('mousemove', this.onMouseMove, false);
-        window.removeEventListener('mouseup', this.onMouseUp, false);
+  onTouchMove = (event: any) => {
+    //console.log('Scroller onTouchMove');
 
-    };
+    const touch = event.changedTouches[0];
 
-    onTouchStart = (event: any) => {
+    this.calcTranslateX.onPointerMove(touch.pageX, touch.pageY);
 
-        //console.log('Scroller onTouchStart');
-        //event.preventDefault();
-        //event.stopPropagation();
+    if (this.calcTranslateX.isYScroll) return;
 
-        const touch = event.changedTouches[0];
+    event.preventDefault();
+    event.stopPropagation();
 
-        this.onPointerDown(touch.pageX, touch.pageY);
+    this.onPointerMove(touch.pageX, touch.pageY);
+  };
 
-    };
+  onTouchEnd = (event: any) => {
+    //console.log('Scroller onTouchEnd');
+    event.preventDefault();
+    event.stopPropagation();
 
-    onTouchMove = (event: any) => {
+    const touch = event.changedTouches[0];
 
-        //console.log('Scroller onTouchMove');
+    this.onPointerUp(touch.pageX, touch.pageY);
+  };
 
-        const touch = event.changedTouches[0];
+  protected onPointerDown = (pageX: number, pageY: number) => {
+    if (this.listRef === null || this.containerRef === null)
+      throw new Error("No listRef or containerRef");
 
-        this.calcTranslateX.onPointerMove(touch.pageX, touch.pageY);
+    //console.log("Scroller onPointerDown");
 
-        if(this.calcTranslateX.isYScroll) return;
+    this.calcTranslateX.onPointerDown(
+      pageX,
+      pageY,
+      this.listRef,
+      this.containerRef
+    );
 
-        event.preventDefault();
-        event.stopPropagation();
+    this.eventTyper.onTouchStart(pageX, pageY);
 
-        this.onPointerMove(touch.pageX, touch.pageY);
+    this.listStyle = {};
+    this.eventType = "";
 
-    };
+    if (this.setState === null) throw new Error("No state");
 
-    onTouchEnd = (event: any) => {
+    this.setState((prevState: ScrollerState) => {
+      //console.log(this.getTranslateX());
 
-        //console.log('Scroller onTouchEnd');
-        //event.preventDefault();
-        //event.stopPropagation();
-        
-        const touch = event.changedTouches[0];
+      return {
+        ...prevState,
+        translateX: this.getTranslateX(),
+      };
+    });
+  };
 
-        this.onPointerUp(touch.pageX, touch.pageY);
+  protected onPointerMove = (pageX: number, pageY: number) => {
+    //console.log("Scroller onPointerMove", this.calcTranslateX.isYScroll);
 
-    };
+    //this.calcTranslateX.onPointerMove(pageX, pageY);
 
-    protected onPointerDown = (pageX: number, pageY: number) => {
+    if (this.setState === null) throw new Error("No state");
 
-        if(this.listRef === null || this.containerRef === null) 
-            throw new Error("No listRef or containerRef");
+    //if(this.calcTranslateX.isYScroll) return;
 
-        //console.log("Scroller onPointerDown");
+    this.setState((prevState: ScrollerState) => {
+      this.eventTyper.onTouchMove(pageX);
 
-        this.calcTranslateX.onPointerDown(pageX, pageY, this.listRef, this.containerRef);
+      this.calcTranslateX.calcTranslateXOnMove(prevState.translateX, pageX);
 
-        this.eventTyper.onTouchStart(pageX, pageY);
+      this.showContentManager.onPointerMove(
+        this.calcTranslateX.listWidth,
+        this.calcTranslateX.itemWidth,
+        this.getTranslateX(),
+        prevState.numberOfActiveItems,
+        this.numberOfItems
+      );
 
-        this.listStyle = {};
-        this.eventType = '';
+      return {
+        ...prevState,
+        translateX: this.getTranslateX(),
+        numberOfActiveItems: this.showContentManager.numberOfActiveItems,
+        //isTranslated: true
+      };
+    });
+  };
 
-        if(this.setState === null) throw new Error("No state");
-
-        this.setState((prevState: ScrollerState) => {
-
-            //console.log(this.getTranslateX());
-
-            return {
-                ...prevState,
-                translateX: this.getTranslateX(),
-            }
-
-        });
-
-    };
-
-    protected onPointerMove = (pageX: number, pageY: number) => {
-
-        //console.log("Scroller onPointerMove", this.calcTranslateX.isYScroll);
-    
-        //this.calcTranslateX.onPointerMove(pageX, pageY);
-
-        if(this.setState === null) throw new Error("No state");
-
-        //if(this.calcTranslateX.isYScroll) return;
-
-        this.setState((prevState: ScrollerState) => {
-
-            this.eventTyper.onTouchMove(pageX);
-        
-            this.calcTranslateX.calcTranslateXOnMove(prevState.translateX, pageX);
-
-            this.showContentManager.onPointerMove(
-                this.calcTranslateX.listWidth, 
-                this.calcTranslateX.itemWidth,
-                this.getTranslateX(),
-                prevState.numberOfActiveItems,
-                this.numberOfItems
-            );
-    
-            return {
-                ...prevState,
-                translateX: this.getTranslateX(),
-                numberOfActiveItems: this.showContentManager.numberOfActiveItems 
-                //isTranslated: true
-            };
-
-        });
-    
-    };
-
-    /* protected onPointerMove = (pageX: number, pageY: number) => {
+  /* protected onPointerMove = (pageX: number, pageY: number) => {
 
         //console.log("Scroller onPointerMove", this.calcTranslateX.isYScroll);
     
@@ -322,69 +295,61 @@ class ScrollerController{
     
     }; */
 
-    protected onPointerUp = (pageX: number, pageY: number) => {
+  protected onPointerUp = (pageX: number, pageY: number) => {
+    //console.log("Scroller onPointerUp");
 
-        //console.log("Scroller onPointerUp");
+    if (this.setState === null) throw new Error("No state");
 
-        if(this.setState === null) throw new Error("No state");
-    
-        this.setState((prevState: ScrollerState) => {
+    this.setState((prevState: ScrollerState) => {
+      if (!this.calcTranslateX.isYScroll) {
+        this.calcTranslateX.onPointerUp();
 
-            if(!this.calcTranslateX.isYScroll){
-    
-                this.calcTranslateX.onPointerUp();
-        
-                //what event - move, swipe etc...
-                this.eventTyper.onTouchEnd(pageX);
-        
-                this.eventType = this.eventTyper.whatEventType(pageY);
-        
-                if(this.eventType === "CLICK"){
-        
-                    return prevState;
-        
-                }
-        
-                if(prevState.translateX > this.calcTranslateX.maxTranslateOffset){
-        
-                    this.calcTranslateX.translateX = this.calcTranslateX.maxTranslateOffset;
-        
-                }else if(prevState.translateX < this.calcTranslateX.minTranslateOffset){
-        
-                    this.calcTranslateX.translateX = this.calcTranslateX.minTranslateOffset;
-        
-                }else if(this.eventType === "SWIPE" || this.eventType === "SWIPE_MOVE") {
-        
-                    this.calcTranslateX.calcTranslateXOnSwipe(this.eventTyper.getSwipeSpeed());
-        
-                }
-        
-                this.listStyle = { transition: 'transform 0.5s ease-out 0s' };
+        //what event - move, swipe etc...
+        this.eventTyper.onTouchEnd(pageX);
 
-                this.showContentManager.onPointerUp(
-                    this.calcTranslateX.listWidth, 
-                    this.calcTranslateX.itemWidth,
-                    this.getTranslateX(), 
-                    prevState.numberOfActiveItems,
-                    this.numberOfItems
-                );
-        
-                return {
-                    ...prevState,
-                    translateX: this.getTranslateX(),
-                    numberOfActiveItems: this.showContentManager.numberOfActiveItems 
-                }
-        
-            }
-        
-            this.calcTranslateX.onPointerUp();
-        
-            return prevState;
+        this.eventType = this.eventTyper.whatEventType(pageY);
 
-        });
-    
-    };
+        if (this.eventType === "CLICK") {
+          return prevState;
+        }
 
+        if (prevState.translateX > this.calcTranslateX.maxTranslateOffset) {
+          this.calcTranslateX.translateX = this.calcTranslateX.maxTranslateOffset;
+        } else if (
+          prevState.translateX < this.calcTranslateX.minTranslateOffset
+        ) {
+          this.calcTranslateX.translateX = this.calcTranslateX.minTranslateOffset;
+        } else if (
+          this.eventType === "SWIPE" ||
+          this.eventType === "SWIPE_MOVE"
+        ) {
+          this.calcTranslateX.calcTranslateXOnSwipe(
+            this.eventTyper.getSwipeSpeed()
+          );
+        }
+
+        this.listStyle = { transition: "transform 0.5s ease-out 0s" };
+
+        this.showContentManager.onPointerUp(
+          this.calcTranslateX.listWidth,
+          this.calcTranslateX.itemWidth,
+          this.getTranslateX(),
+          prevState.numberOfActiveItems,
+          this.numberOfItems
+        );
+
+        return {
+          ...prevState,
+          translateX: this.getTranslateX(),
+          numberOfActiveItems: this.showContentManager.numberOfActiveItems,
+        };
+      }
+
+      this.calcTranslateX.onPointerUp();
+
+      return prevState;
+    });
+  };
 }
 
 export default ScrollerController;

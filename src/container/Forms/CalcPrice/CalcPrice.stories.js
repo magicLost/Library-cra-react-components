@@ -2,6 +2,7 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 //import { withKnobs, object } from "@storybook/addon-knobs/react";
 import CalcPrice from "./CalcPrice";
+import Form from "../../../component/Form/Form";
 
 export default {
   component: CalcPrice,
@@ -28,5 +29,5 @@ export default {
 };
 
 export const Default = () => {
-  return <CalcPrice />;
+  return <CalcPrice Form={Form} />;
 };

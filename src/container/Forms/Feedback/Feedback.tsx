@@ -8,9 +8,10 @@ import {
   feedbackElementsMap,
   callMeElementsMap,
 } from "../../../data/form/feedback_forms_data";
-import Form, {
+import {
   TFormElementsDescs,
   TFormElementsState,
+  IFormProps,
 } from "../../../component/Form/Form";
 import FormRequestController, {
   TSendPostWithJsonResponse,
@@ -21,7 +22,7 @@ import FeedbackModel, {
 } from "./FeedbackModel/FeedbackModel";
 import FormValidatorChain from "../../../helper/Validation/FormValidatorChain";
 
-interface FeedbackProps {
+interface FeedbackProps<T> {
   url: string;
   //successOkButtonClickHandler: (event: any) => void;
   isCallMe: boolean;
@@ -31,6 +32,7 @@ interface FeedbackProps {
   hiddenFields?: IHiddenField[];
   successMessage: string;
   getToken: () => string;
+  Form: React.FC<IFormProps<T>>;
 }
 
 function Feedback({
@@ -43,7 +45,8 @@ function Feedback({
   hiddenFields,
   successMessage,
   getToken,
-}: FeedbackProps) {
+  Form,
+}: FeedbackProps<FEEDBACK_FORM_ELEMENTS>) {
   const formElementsMap = isCallMe ? callMeElementsMap : feedbackElementsMap;
 
   const {

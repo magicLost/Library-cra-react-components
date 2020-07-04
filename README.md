@@ -10,6 +10,14 @@ npm-release:
 - buildNpmLib - file where we run NpmHelper
 - config - config info like version, excluded files
 
+npm publish:
+
+- add new components to /npm-release/templates/index.templates.json
+- npm run build:lib
+- change version in /dist-lib/package.json
+- cd ./dist-lib
+- npm publish
+
 Components:
 
 - ArrowControls
@@ -35,6 +43,7 @@ Components:
   - CloseButton
   - Image
   - ImgWithLoading
+  - ImageSharp
   - ListSvg
   - ListSvgWithText
   - Logo

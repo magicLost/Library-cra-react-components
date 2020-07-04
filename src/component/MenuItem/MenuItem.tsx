@@ -1,4 +1,5 @@
 import React from "react";
+//@ts-ignore
 import { Link } from "react-router-dom";
 import classes from "./MenuItem.module.scss";
 import { MenuItem } from "./../../data/menu";

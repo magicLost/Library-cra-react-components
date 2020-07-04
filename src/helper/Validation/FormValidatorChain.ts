@@ -1,10 +1,12 @@
-import { IValidatorDesc } from "../../data/feedback_forms_data";
+//import { IValidatorDesc } from "../../data/form/feedback_forms_data";
+import { IValidatorDesc } from "./../../component/Form/Form";
+
 import {
   VALIDATOR_TYPES,
   regex,
   length,
   fileSize,
-  fileType
+  fileType,
 } from "./form_validators";
 import ValidationError from "./ValidationError";
 

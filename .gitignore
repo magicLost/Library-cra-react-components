@@ -12,6 +12,7 @@
 /build
 
 /dist-lib/
+/src/static/images/
 
 # misc
 .DS_Store

@@ -27,6 +27,8 @@ export interface TElementAttrs {
   type?: string;
   id: string;
   placeholder?: string;
+  required?: boolean;
+  accept?: string;
 }
 
 export interface IFormElementDesc {
@@ -67,7 +69,7 @@ export type ELEMENT_TYPE =
 
 /* END */
 
-interface FormProps<T> {
+export interface IFormProps<T> {
   formError: string;
   formMessage: string;
   onSubmit: (event: any) => void;
@@ -183,7 +185,7 @@ function Form<T>({
   //children,
   submitButtonLabel = "Отправить",
   isLoading = false,
-}: FormProps<T>) {
+}: IFormProps<T>) {
   /* const onKeyUp = (event: any) => {
 
   }; */

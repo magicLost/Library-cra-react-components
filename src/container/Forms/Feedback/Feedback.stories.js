@@ -3,6 +3,7 @@ import { action } from "@storybook/addon-actions";
 //import { withKnobs, object } from "@storybook/addon-knobs/react";
 import { sendPostWithJsonResponse } from "utils-library-lost/Fetch/Fetch";
 import Feedback from "./Feedback";
+import Form from "../../../component/Form/Form";
 
 export default {
   component: Feedback,
@@ -37,6 +38,7 @@ export const Default = () => {
       isCallMe={false}
       successMessage={"Все ОК!!!"}
       getToken={() => "token"}
+      Form={Form}
     />
   );
 };
@@ -50,6 +52,7 @@ export const CallMe = () => {
       isCallMe={true}
       successMessage={"Все ОК!!!"}
       getToken={() => "token"}
+      Form={Form}
     />
   );
 };
